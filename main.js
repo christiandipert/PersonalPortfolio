@@ -34,8 +34,7 @@ pointLight.position.set(5, 7, 5);
 
 const ambientLight = new THREE.AmbientLight(0xffffff);
 const lightHelper = new THREE.PointLightHelper(pointLight);
-const gridHelper = new THREE.GridHelper(200, 50);
-scene.add(lightHelper, gridHelper);
+scene.add(lightHelper);
 scene.add(pointLight, ambientLight);
 
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -56,6 +55,12 @@ Array(200).fill().forEach(addStar);
 const spaceTexture = new THREE.TextureLoader().load("space.jpg");
 scene.background = spaceTexture;
 
+// add me
+
+const meTexture = new THREE.TextureLoader().load('me.png');
+const me = new THREE.Mesh(new THREE.BoxGeometry(3, 3, 3), new THREE.MeshBasicMaterial({ map: meTexture }));
+scene.add(me);
+
 const earthTexture = new THREE.TextureLoader().load("earthTexture.jpg");
 const normalTexture = new THREE.TextureLoader().load("normal.jpg");
 
@@ -72,11 +77,17 @@ scene.add(earth);
 earth.position.z = 30;
 earth.position.setX(-10);
 
+me.position.z = -5;
+me.position.x = 2;
+
 function moveCamera() {
   const t = document.body.getBoundingClientRect().top;
   earth.rotation.x += 0.05;
   earth.rotation.y += 0.075;
   earth.rotation.z = 0.05;
+
+  me.rotation.y += 0.01;
+  me.rotation.z += 0.01;
 
   camera.position.z = t * -0.01;
   camera.position.x = t * -0.0002;
